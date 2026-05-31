@@ -52,7 +52,8 @@ Phone number: 0901234567
 `<Invalid email data is saved to the system, which may cause errors in sending notifications or verifying accounts later.>`
 
 **Minh chứng:**
-`<!-- Đính kèm ảnh chụp màn hình nếu có -->`
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6c40b914-3053-4418-abaa-5cee81e92fd1" />
+
 
 **Đề xuất xử lý:**
 `<To validate emails, require a valid domain after the "." (e.g. .com, .vn, , ...)>` 
