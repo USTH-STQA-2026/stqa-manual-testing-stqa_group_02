@@ -93,7 +93,8 @@ Phone number: 0901234567
 `<Users do not receive information about overdue payments, affecting the loan repayment management process and penalty handling.>`
 
 **Minh chứng:**
-`<!-- -->`
+<img width="843" height="379" alt="image" src="https://github.com/user-attachments/assets/65b438fd-756a-48b0-b690-293f2815e870" />
+
 
 **Đề xuất xử lý:**
 `<Check the logic for comparing payment dates and deadlines, and add pop-up/warning notifications for overdue payments.>`
@@ -134,7 +135,8 @@ Phone number: 0901234567
 `<Invalid book borrowing data may arise, causing discrepancies in book inventory status.>`
 
 **Minh chứng:**
-`<!-- -->`
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/44a036d7-ddca-44d9-8bc7-ed0d4bcb065c" />
+
 
 **Đề xuất xử lý:**
 `<Ensure that the transaction is fully rolled back when the account expires and do not update the book's status to "Borrowed".>`
@@ -173,7 +175,8 @@ Phone number: 0901234567
 `<Leaking personal information and borrowing history of others constitutes a violation of access rights and data security.>`
 
 **Minh chứng:**
-`<!-- -->`
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/69528386-a5f3-4644-a7df-e2b2bd2e3dd1" />
+
 
 **Đề xuất xử lý:**
 `<Verify access permissions before querying loan slip data, only allowing access to data belonging to the current account.>`
@@ -211,7 +214,8 @@ Phone number: 0901234567
 `<Users are unable to register accounts with valid email addresses, affecting member management functionality.>`
 
 **Minh chứng:**
-`<!-- -->`
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/9110deb1-d3d6-428e-b9de-cc16d5ccc591" />
+
 
 **Đề xuất xử lý:**
 `<Check the email validation regex to ensure full support for RFC-compliant email formats.>`
