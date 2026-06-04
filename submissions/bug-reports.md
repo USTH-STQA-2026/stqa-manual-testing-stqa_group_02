@@ -254,6 +254,8 @@ Phone number: 0901234567
 `<The borrowing limit constraint is not enforced, allowing members to hold unlimited books simultaneously. This reduces availability for other members and violates core business rules defined in REQ-04.>`
 
 **Minh chứng:**
+<img width="1912" height="907" alt="image" src="https://github.com/user-attachments/assets/4976fcb9-ad31-44c1-a3c4-0811017fd2b1" />
+
 
 
 
@@ -295,6 +297,7 @@ Phone number: 0901234567
 `<Search and filter work independently instead of as a combined condition, causing users to receive irrelevant results and making it difficult to locate a specific book efficiently.>`
 
 **Minh chứng:**
+<img width="1906" height="883" alt="image" src="https://github.com/user-attachments/assets/77bd9c6a-0437-400a-ac18-2975d0557222" />
 
 
 **Đề xuất xử lý:**
