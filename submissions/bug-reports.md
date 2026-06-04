@@ -35,12 +35,10 @@
 `<The "Add New Member" screen is currently open.>`
 
 **Bước tái hiện:**
-1. Enable the "Add new member" function.
-Input:
-2.Full name: Nguyen Van Test
-E-mail:test@email
-Phone number: 0901234567
-3.Press the "Add Member" button.
+1. `<Enable the "Add new member" function.
+Input: >`
+2. `<Full name: Nguyen Van Test; E-mail:test@email; Phone number: 0901234567>`
+3. `<Press the "Add Member" button.>`
 
 **Kết quả mong đợi:**
 `<The system should reject emails that are not in the correct format and display an error message.>`

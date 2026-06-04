@@ -29,40 +29,42 @@
 | TC-11 | Search & Filter | Display all books by Nguyen Minh Duc | BOOK001 and BOOK009 were displayed correctly | Pass |   | -- |
 | TC-12 | Search & Filter |Display no result message for invalid keyword | System displayed “No books found.” correctly when searching xyzabc123 | Pass |   | -- |
 | TC-13 | Search & Filter | Filter books by category | Only books in the “Technology” category were displayed | Pass | | -- |
-| TC-14 | Borrow Book | Borrow available book successfully | Borrow operation completed successfully. Book status changed to “Borrowed” and borrow record was created correctly | Pass |   | -- |
-| TC-15 | Borrow Book | System should reject borrowing unavailable book | System does not provide a feature for librarian to select a member and borrow an unavailable book. Test execution could not be completed | Blocked | | -- |
-| TC-16 | Borrow Book | Reject — member is suspended | System displayed exact message “Thành viên đang bị tạm ngưng”. Borrow operation was rejected. No borrow record was created and BOOK001 remained “Available” | Fail |  | BUG-04 | 
-| TC-17 | Borrow Book | Reject — member account is expired | System displayed exact message “Thành viên đã hết hạn”. Borrow operation was rejected and no borrow record was created | Pass |  | -- | 
-| TC-18 | Borrow Book | Borrow book - Member borrows for themself | Member account dam.tran successfully borrowed BOOK001. The created borrow record belonged to MEM003 correctly | Pass | | -- | 
-| TC-19 | Borrow Book | BVA - Borrow book when borrowCount = 0 (min boundary) | Borrow operation completed successfully. MEM003 borrowCount changed from 0 to 1 after borrowing BOOK001 | Pass | | -- |
-| TC-20 | Return Book | Return book on time — successfully | BR003 status changed to “Returned”. BOOK013 changed to “Available”. No overdue warning was displayed. MEM006 borrowCount became 0 | Pass |  | -- | 
-| TC-21 | Return Book | Return overdue book — warning must appear | Return operation completed successfully but system did not display overdue warning for overdue record BR001. | Fail |  | BUG-03 |
-| TC-22 | Check Overdue | Overdue record should be flagged correctly | BR001 status changed to “Overdue” after clicking “Check Overdue” | Pass | | -- |
-| TC-23 | Check Overdue | Record with dueDate = today must become “Overdue” | System did not provide a way to create a record with dueDate equal to today for testing | Blocked | | -- | 
-| TC-24 | Check Overdue | Future dueDate must not be flagged overdue | BR003 remained “Borrowing” after overdue checking. | Pass |  | -- | 
-| TC-25 | Check Overdue | Member role cannot access overdue checking feature | “Check Overdue” button was not visible for member account. | Pass |  | -- | 
-| TC-26 | Member Management | Add new member successfully | System displayed message “Email không hợp lệ.” and did not create new member account using email `nguyen.test@email.com`. | Fail | | BUG-06 |
-| TC-27 | Member Management | Reject invalid email without dot in domain | System accepted email `test@email` and created new member successfully | Fail |  | BUG-01 | 
-| TC-28 | Member Management | Reject invalid email without @ symbol | System don't accept email `testemail.com` and not creating new member successfully | Pass |  | --  | 
-| TC-29 | Member Management | Reject duplicate email | System rejected duplicated email already existing in database | Pass | |--|
-| TC-30 | Member Management | Reject empty full name | System prevented creating member with empty full name | Pass |  | -- |
-| TC-31 | Access Control | Member cannot add new members | “Members” tab and “Add Member” button were not visible for Member role | Pass | | -- | 
-| TC-32 | Access Control | Librarian can view all borrow records | Borrow/Return page displayed all records including BR001, BR002, BR003, BR004 and BR005 | Pass | | -- | 
-| TC-33 | Access Control | Member can only view own records | Member account ba.nguyen could only view BR001 and BR004. Other members’ records were not visible | Pass |  | -- | 
-| TC-34 | Access Control | Security — member cannot view another member's records | Member account ba.nguyen was able to view borrowing records belonging to dam.tran (MEM003) | Fail | | BUG-05 | 
-| TC-35 | Access Control | Borrow record displays all 5 required fields | BR001 displayed all required fields: Record ID, Book, Borrow Date, Due Date and Status correctly | Pass |  | -- |
+| TC-14 | Search & Filter | Only books that satisfy BOTH conditions should be displayed. If no book satisfies both conditions, the system should display no results. | When searching for "Nguyen Minh Duc" with the Technology category, the system returned the correct books. However, when searching for "Nguyen Minh Duc" with the Education category, the system displayed all Education books instead of showing no results. The author search condition was ignored when no matching intersection existed. | Fail | | BUG-09 |
+| TC-15 | Borrow Book | Borrow available book successfully | Borrow operation completed successfully. Book status changed to “Borrowed” and borrow record was created correctly | Pass |   | -- |
+| TC-16 | Borrow Book | System should reject borrowing unavailable book | System does not provide a feature for librarian to select a member and borrow an unavailable book. Test execution could not be completed | Blocked | | -- |
+| TC-17 | Borrow Book | Reject — member is suspended | System displayed exact message “Thành viên đang bị tạm ngưng”. Borrow operation was rejected. No borrow record was created and BOOK001 remained “Available” | Fail |  | BUG-04 | 
+| TC-18 | Borrow Book | Reject — member account is expired | System displayed exact message “Thành viên đã hết hạn”. Borrow operation was rejected and no borrow record was created | Pass |  | -- | 
+| TC-19 | Borrow Book | Borrow book - Member borrows for themself | Member account dam.tran successfully borrowed BOOK001. The created borrow record belonged to MEM003 correctly | Pass | | -- | 
+| TC-20 | Borrow Book | BVA - Borrow book when borrowCount = 0 (min boundary) | Borrow operation completed successfully. MEM003 borrowCount changed from 0 to 1 after borrowing BOOK001 | Pass | | -- |
+| TC-21 | Borrow Book | System must reject any borrowing request when the member already has 3 active borrowed books. | The member successfully borrowed the 4th book despite already reaching the maximum limit of 3 active borrowed books. The system did not display any warning at that point. The warning message "Đã đạt giới hạn mượn tối đa (3 sách)." was displayed only when the member attempted to borrow the 5th book. | Fail |  | BUG-07 |
+| TC-22 | Return Book | Return book on time — successfully | BR003 status changed to “Returned”. BOOK013 changed to “Available”. No overdue warning was displayed. MEM006 borrowCount became 0 | Pass |  | -- | 
+| TC-23 | Return Book | Return overdue book — warning must appear | Return operation completed successfully but system did not display overdue warning for overdue record BR001. | Fail |  | BUG-03 |
+| TC-24 | Check Overdue | Overdue record should be flagged correctly | BR001 status changed to “Overdue” after clicking “Check Overdue” | Pass | | -- |
+| TC-25 | Check Overdue | Record with dueDate = today must become “Overdue” | System did not provide a way to create a record with dueDate equal to today for testing | Blocked | | -- | 
+| TC-26 | Check Overdue | Future dueDate must not be flagged overdue | BR003 remained “Borrowing” after overdue checking. | Pass |  | -- | 
+| TC-27 | Check Overdue | Member role cannot access overdue checking feature | “Check Overdue” button was not visible for member account. | Pass |  | -- | 
+| TC-28 | Member Management | Add new member successfully | System displayed message “Email không hợp lệ.” and did not create new member account using email `nguyen.test@email.com`. | Fail | | BUG-06 |
+| TC-29 | Member Management | Reject invalid email without dot in domain | System accepted email `test@email` and created new member successfully | Fail |  | BUG-01 | 
+| TC-30 | Member Management | Reject invalid email without @ symbol | System don't accept email `testemail.com` and not creating new member successfully | Pass |  | --  | 
+| TC-31 | Member Management | Reject duplicate email | System rejected duplicated email already existing in database | Pass | |--|
+| TC-32 | Member Management | Reject empty full name | System prevented creating member with empty full name | Pass |  | -- |
+| TC-33 | Access Control | Member cannot add new members | “Members” tab and “Add Member” button were not visible for Member role | Pass | | -- | 
+| TC-34 | Access Control | Librarian can view all borrow records | Borrow/Return page displayed all records including BR001, BR002, BR003, BR004 and BR005 | Pass | | -- | 
+| TC-35 | Access Control | Member can only view own records | Member account ba.nguyen could only view BR001 and BR004. Other members’ records were not visible | Pass |  | -- | 
+| TC-36 | Access Control | Security — member cannot view another member's records | Member account ba.nguyen was able to view borrowing records belonging to dam.tran (MEM003) | Fail | | BUG-05 | 
+| TC-37 | Access Control | Borrow record displays all 5 required fields | BR001 displayed all required fields: Record ID, Book, Borrow Date, Due Date and Status correctly | Pass |  | -- |
 ---
 
 ## Tổng hợp kết quả
 
 | Chỉ số | Giá trị |
 |--------|---------|
-| Tổng số test case | `35` |
+| Tổng số test case | `37` |
 | Pass | `28` |
-| Fail | `5` |
+| Fail | `7` |
 | Blocked | `2` |
 | Not Run | `0` |
-| **Tỷ lệ Pass** | `80%` |
+| **Tỷ lệ Pass** | `75.7%` |
 
 ### Kết quả theo nhóm chức năng
 
@@ -70,9 +72,9 @@
 |------|---------|------|------|------------|
 | Login | 5 | 5 | 0 | 100% | 
 | Book List | 3 | 3 | 0 | 100% | 
-| Search & Filter | 5 | 5 | 0 | 100% | 
-| Borrow Book | 6 | 4 | 1 | 66.7% | 
+| Search & Filter | 6 | 5 | 1 | 83.3% | 
+| Borrow Book | 7 | 4 | 2 | 57.1% | 
 | Return Book | 2 | 1 | 1 | 50% | 
-| Check Overdue | 4 | 2 | 0 | 50% | 
+| Check Overdue | 4 | 3 | 0 | 75% | 
 | Member Management | 5 | 3 | 2 | 60% | 
 | Access Control | 5 | 4 | 1 | 80% |

@@ -143,10 +143,6 @@
 | TC-36 | Security — member cannot view another member's records (BUG-05) | Logged in as ba.nguyen (MEM002). | 1. Go to "Borrow/Return" tab. 2. Attempt to access or search for MEM003's records (dam.tran). | Target: MEM003 (dam.tran) | ba.nguyen must NOT see any records belonging to dam.tran. Result: 0 records or access denied. If records visible → BUG-05 (Critical / P1). | REQ-08 | EP |
 | TC-37 | Borrow record displays all 5 required fields | Logged in as Librarian. | 1. Go to "Borrow/Return" tab. 2. View details of BR001. | Record: BR001 | BR001 shows all 5 fields: Record ID (BR001) + Book (BOOK003) + Borrow Date (01/09/2024) + Due Date (15/09/2024) + Status (Borrowing). | REQ-08 | EP |
 
-
-
-
-
 ## Tổng hợp
 
 | Feature Group | No. of TCs | REQ Covered | IDM Techniques Applied |
