@@ -149,11 +149,11 @@
 | ------------- | ---------- | ----------- | ---------------------- |
 | Login | 5 | REQ-01 | EP, BVA |
 | Book List | 3 | REQ-02 | EP, State Model |
-| Search & Filter | 5 | REQ-03 | EP, Metamorphic |
-| Borrow Book | 6 | REQ-04 | EP, BVA, Decision Table |
+| Search & Filter | 6 | REQ-03 | EP, Metamorphic |
+| Borrow Book | 7 | REQ-04 | EP, BVA, Decision Table |
 | Return Book | 2 | REQ-05 | EP, FSM |
 | Check Overdue | 4 | REQ-06 | EP, BVA |
 | Member Management | 6 | REQ-07 | EP, BVA |
 | Borrow Records | 4 | REQ-08 | EP |
-| **Total** | **35** | **REQ-01 → REQ-08** | **EP, BVA, Decision Table, FSM, Metamorphic** |
+| **Total** | **37** | **REQ-01 → REQ-08** | **EP, BVA, Decision Table, FSM, Metamorphic** |
 |
