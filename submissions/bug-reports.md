@@ -17,7 +17,7 @@
 |-----------|---------|
 | **Mã lỗi** | BUG-01 |
 | **TC liên quan** | `<!-- TC-27 -->` |
-| **REQ liên quan** | `<!-- REQ-7 -->` |
+| **REQ liên quan** | `<!-- REQ-07 -->` |
 | **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `< Đinh Công Thành >` |
 | **Ngày phát hiện** | `<29/05/2026>` |
@@ -219,3 +219,83 @@ Phone number: 0901234567
 
 **Đề xuất xử lý:**
 `<Check the email validation regex to ensure full support for RFC-compliant email formats.>`
+
+## BUG-07
+
+| Thuộc tính | Chi tiết |
+|-----------|---------|
+| **Mã lỗi** | BUG-07 |
+| **TC liên quan** | `<!-- TC-21 -->` |
+| **REQ liên quan** | `<!-- REQ-04 -->` |
+| **Mức độ** | `< Medium >` |
+| **Người phát hiện** | `<Ngô Đức Minh Sơn >` |
+| **Ngày phát hiện** | `<4//2026>` |
+| **Trạng thái** | `< Open >` |
+
+**Tiêu đề:**
+`<System allows a member to borrow more than 3 books, exceeding the maximum borrowing limit.>`
+
+**Điều kiện tiên quyết:**
+`<Logged in as Member (MEM002 — ba.nguyen). Member already has 3 active borrowed books.>`
+
+**Bước tái hiện:**
+1. `<Log in as Member ba.nguyen@email.com / password123.>`
+2. `<Borrow books until the member reaches exactly 3 active borrowed books.>`
+3. `<Attempt to borrow an additional available book (e.g. BOOK008).>`
+4.`<Observe system response.>`
+
+**Kết quả mong đợi:**
+`<The system must immediately reject the borrow request. Warning message "Đã đạt giới hạn mượn tối đa (3 sách)." must be displayed. No new borrow record should be created. BOOK008 remains "Available".>`
+
+**Kết quả thực tế:**
+`<The system successfully processes the 4th borrow request. A new borrow record is created and the book status changes to "Borrowed", exceeding the 3-book limit defined in the SRS.>`
+
+**Tác động:**
+`<The borrowing limit constraint is not enforced, allowing members to hold unlimited books simultaneously. This reduces availability for other members and violates core business rules defined in REQ-04.>`
+
+**Minh chứng:**
+
+
+
+**Đề xuất xử lý:**
+`<Before processing a borrow request, check the member's current active borrow count. If count ≥ 3, reject the request and display the appropriate error message as specified in REQ-04.>`
+
+## BUG-09
+
+| Thuộc tính | Chi tiết |
+|-----------|---------|
+| **Mã lỗi** | BUG-09 |
+| **TC liên quan** | `<!-- TC-14 -->` |
+| **REQ liên quan** | `<!-- REQ-03 -->` |
+| **Mức độ** | `< Medium >` |
+| **Người phát hiện** | `< Đinh Công Thành >` |
+| **Ngày phát hiện** | `<4//2026>` |
+| **Trạng thái** | `< Open >` |
+
+**Tiêu đề:**
+`<Search and category filter do not apply intersection — all results from either condition are shown separately.>`
+
+
+**Điều kiện tiên quyết:**
+`<User is logged in. The "Books" tab is open.>`
+
+**Bước tái hiện:**
+1. `<Go to the "Books" tab.>`
+2. `<Select category filter: Technology (Công nghệ).>`
+3. `<Type keyword Python in the search box.>`
+4.`<Observe the results displayed.>`
+
+**Kết quả mong đợi:**
+`<Only BOOK009 (Nhập môn lập trình Python — Technology) should be displayed, as it is the only book satisfying BOTH the category filter AND the search keyword simultaneously.>`
+
+**Kết quả thực tế:**
+`<Describe the actual results observed. — : all Technology books are shown, or all books matching "Python" regardless of category are shown. >`
+
+**Tác động:**
+`<Search and filter work independently instead of as a combined condition, causing users to receive irrelevant results and making it difficult to locate a specific book efficiently.>`
+
+**Minh chứng:**
+
+
+**Đề xuất xử lý:**
+`<Apply both conditions simultaneously using AND logic: results must match the selected category AND contain the keyword in title or author name.)>` 
