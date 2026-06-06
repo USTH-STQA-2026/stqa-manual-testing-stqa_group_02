@@ -6,8 +6,8 @@
 
 | Thông tin | |
 |---|---|
-| **Nhóm** | `<group 2>` |
-| **Ngày báo cáo** | `< 31/05/2026 >` |
+| **Nhóm** | `<STQA_Group_02>` |
+| **Ngày báo cáo** | `< 4/06/2026 >` |
 
 ---
 
@@ -16,7 +16,7 @@
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-01 |
-| **TC liên quan** | `<!-- TC-27 -->` |
+| **TC liên quan** | `<!-- TC-29 -->` |
 | **REQ liên quan** | `<!-- REQ-07 -->` |
 | **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `< Đinh Công Thành >` |
@@ -63,7 +63,7 @@ Input: >`
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-03 |
-| **TC liên quan** | `<!-- TC-21 -->` |
+| **TC liên quan** | `<!-- TC-23 -->` |
 | **REQ liên quan** | `<!-- REQ-05 -->` |
 | **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `<Ngô Đức Minh Sơn>` |
@@ -72,6 +72,12 @@ Input: >`
 
 **Tiêu đề:**
 `<No warning will be displayed when books are returned late.>`
+
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
+
 
 **Điều kiện tiên quyết:**
 `<There is an overdue loan slip BR001.>`
@@ -105,7 +111,7 @@ Input: >`
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-04 |
-| **TC liên quan** | `<!-- TC-16 -->` |
+| **TC liên quan** | `<!-- TC-17 -->` |
 | **REQ liên quan** | `<!-- REQ-04 -->` |
 | **Mức độ** | `< High >` |
 | **Người phát hiện** | `<Nguyễn Sỹ Chúc>` |
@@ -114,6 +120,12 @@ Input: >`
 
 **Tiêu đề:**
 `<Allows borrowing of books even if the member account has expired.>`
+
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
+
 
 **Điều kiện tiên quyết:**
 `<Member's account has expired.>`
@@ -144,7 +156,7 @@ Input: >`
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-05 |
-| **TC liên quan** | `<!-- TC-34 -->` |
+| **TC liên quan** | `<!-- TC-36 -->` |
 | **REQ liên quan** | `<!-- REQ-08 -->` |
 | **Mức độ** | `< High >` |
 | **Người phát hiện** | `<Nguyễn Sỹ Nam >` |
@@ -153,6 +165,12 @@ Input: >`
 
 **Tiêu đề:**
 `<Members can view other people's loan slips.>`
+
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
+
 
 **Điều kiện tiên quyết:**
 `<Log in using your regular member account.>`
@@ -184,7 +202,7 @@ Input: >`
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-06 |
-| **TC liên quan** | `<!-- TC-26 -->` |
+| **TC liên quan** | `<!-- TC-28 -->` |
 | **REQ liên quan** | `<!-- REQ-07 -->` |
 | **Mức độ** | `< Low >` |
 | **Người phát hiện** | `<Nguyễn Phú Nam Hải >` |
@@ -193,6 +211,12 @@ Input: >`
 
 **Tiêu đề:**
 `<The error message "Invalid email address displayed" is incorrect.>`
+
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
+
 
 **Điều kiện tiên quyết:**
 `<The "Add New Member" screen is currently open.>`
@@ -233,6 +257,12 @@ Input: >`
 **Tiêu đề:**
 `<System allows a member to borrow more than 3 books, exceeding the maximum borrowing limit.>`
 
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
+
+
 **Điều kiện tiên quyết:**
 `<Logged in as Member (MEM002 — ba.nguyen). Member already has 3 active borrowed books.>`
 
@@ -254,9 +284,6 @@ Input: >`
 **Minh chứng:**
 <img width="1912" height="907" alt="image" src="https://github.com/user-attachments/assets/4976fcb9-ad31-44c1-a3c4-0811017fd2b1" />
 
-
-
-
 **Đề xuất xử lý:**
 `<Before processing a borrow request, check the member's current active borrow count. If count ≥ 3, reject the request and display the appropriate error message as specified in REQ-04.>`
 
@@ -275,6 +302,10 @@ Input: >`
 **Tiêu đề:**
 `<Search and category filter do not apply intersection — all results from either condition are shown separately.>`
 
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
 
 **Điều kiện tiên quyết:**
 `<User is logged in. The "Books" tab is open.>`
