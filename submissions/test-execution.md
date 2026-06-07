@@ -29,7 +29,8 @@
 | TC-11 | Search & Filter | Display all books by Nguyen Minh Duc | BOOK001 and BOOK009 were displayed correctly | Pass |   | -- |
 | TC-12 | Search & Filter |Display no result message for invalid keyword | System displayed “No books found.” correctly when searching xyzabc123 | Pass |   | -- |
 | TC-13 | Search & Filter | Filter books by category | Only books in the “Technology” category were displayed | Pass | | -- |
-| TC-14 | Search & Filter | Category filter should be case-insensitive | The system displayed all books correctly when the category `Công nghệ` was entered. However, entering `công nghệ` in lowercase returned no results. The filter did not treat uppercase and lowercase inputs equally as required. | Fail |  | BUG-01 |
+| TC-14 | Search & Filter | Category filter should be case-insensitive | The system displayed all books correctly when the category `Công nghệ` was entered. However, entering `công nghệ` in lowercase returned no results. The filter did not treat uppercase and lowercase inputs equally as required. | Fail | <img width="1366" height="719" alt="image" src="https://github.com/user-attachments/assets/9d032375-4875-452e-8959-cce26edd456f" />
+ | BUG-01 |
 | TC-15 | Borrow Book | Borrow available book successfully | Borrow operation completed successfully. Book status changed to “Borrowed” and borrow record was created correctly | Pass |   | -- |
 | TC-16 | Borrow Book | System should reject borrowing unavailable book | System does not provide a feature for librarian to select a member and borrow an unavailable book. Test execution could not be completed | Blocked | | -- |
 | TC-17 | Borrow Book | Reject — member is suspended | System displayed exact message “Thành viên đang bị tạm ngưng”. Borrow operation was rejected. No borrow record was created and BOOK001 remained “Available” | Fail |  | BUG-02 | 
