@@ -9,325 +9,303 @@
 | **Nhóm** | `<STQA_Group_02>` |
 | **Ngày báo cáo** | `< 4/06/2026 >` |
 
+**Môi trường:**
+- Trình duyệt: Chrome `< 148.0.7778.179 >`
+- Hệ điều hành: `<Windows 10>`
+- Ngôn ngữ giao diện: Tiếng Việt
+
 ---
 
 ## BUG-01
+**Tiêu đề:**
+`<Category filter is case-sensitive — typing in lowercase returns no results even when the category exists.>`
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-01 |
-| **TC liên quan** | `<!-- TC-29 -->` |
-| **REQ liên quan** | `<!-- REQ-07 -->` |
+| **TC liên quan** | `<!-- TC-14 -->` |
+| **REQ liên quan** | `<!-- REQ-03 -->` |
 | **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `< Đinh Công Thành >` |
 | **Ngày phát hiện** | `<29/05/2026>` |
 | **Trạng thái** | `< Open >` |
 
-**Tiêu đề:**
-`<Allows account creation with invalid email addresses lacking the full domain.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
 **Điều kiện tiên quyết:**
-`<The "Add New Member" screen is currently open.>`
+`<User is logged in (any role). The "Books" tab is open.>`
 
 **Bước tái hiện:**
-1. `<Enable the "Add new member" function.
-Input: >`
-2. `<Full name: Nguyen Van Test; E-mail:test@email; Phone number: 0901234567>`
-3. `<Press the "Add Member" button.>`
+1. `<Go to the "Books" tab. >`
+2. `<Type "công nghệ" (all lowercase) into the category filter field.>`
+3. `<Observe the results.>`
 
 **Kết quả mong đợi:**
-`<The system should reject emails that are not in the correct format and display an error message.>`
+`<All books in the "Công nghệ" category should be displayed. REQ-03 states search/filter must be case-insensitive, so "công nghệ" and "Công nghệ" should return the same result.>`
 
 **Kết quả thực tế:**
-`<The system successfully created members using email addresses test@email.>`
+`<The system displayed "Không tìm thấy sách nào." — no books were shown at all.>`
 
 **Tác động:**
-`<Invalid email data is saved to the system, which may cause errors in sending notifications or verifying accounts later.>`
+`<Users who type the category name in lowercase will get no results, making the filter basically unusable unless they know to type with exact capitalization.>`
 
 **Minh chứng:**
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/6c40b914-3053-4418-abaa-5cee81e92fd1" />
+< />
 
 
 **Đề xuất xử lý:**
-`<To validate emails, require a valid domain after the "." (e.g. .com, .vn, , ...)>` 
+`<Apply case-insensitive matching for the category filter, same as the search box. Convert both the input and category names to lowercase before comparing.)>` 
 
 ---
 
-## BUG-03
+## BUG-02
+**Tiêu đề:**
+`<Expired member is shown a generic error message instead of the exact required rejection message.>`
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
-| **Mã lỗi** | BUG-03 |
-| **TC liên quan** | `<!-- TC-23 -->` |
-| **REQ liên quan** | `<!-- REQ-05 -->` |
+| **Mã lỗi** | BUG-02 |
+| **TC liên quan** | `<!-- TC-17 -->` |
+| **REQ liên quan** | `<!-- REQ-04 -->` |
 | **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `<Ngô Đức Minh Sơn>` |
 | **Ngày phát hiện** | `<30/5/2026>` |
 | **Trạng thái** | `< Open >` |
 
-**Tiêu đề:**
-`<No warning will be displayed when books are returned late.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
 
 **Điều kiện tiên quyết:**
-`<There is an overdue loan slip BR001.>`
+`<Logged in as Member cu.le(MEM004) . On the "Books" tab.>`
 
 **Bước tái hiện:**
-1. `<Log in to your member account.>`
-2. `<Enable the "Borrow/Return" function>`
-3. `<Return overdue books.>`
+1. `<Log in as cu.le@email.com / password123.>`
+2. `<Go to the "Books" tab.>`
+3. `<Find an available book.>`
+4. `<Click the borrow button on that book.>`
+5. `<Observe the error message displayed.>`
 
 **Kết quả mong đợi:**
-`<The system should display a warning that the book is overdue when it is returned.>`
+`<System rejects the borrow request and displays the EXACT message: "Thành viên đã hết hạn". No borrow record should be created.>`
 
 **Kết quả thực tế:**
-`<The book return system was successful, but it didn't display any overdue warnings.>`
+`<System displayed with the message "Thành viên đã hết hạn. Không thể mượn sách." — the message contains extra text beyond what the SRS specifies, or the wording does not match exactly as required.>`
 
 **Tác động:**
-`<Users do not receive information about overdue payments, affecting the loan repayment management process and penalty handling.>`
+`<The error message does not match the exact wording defined in REQ-04. While the borrow is correctly rejected, the inconsistent message could cause confusion and fails the acceptance criteria for exact error message matching.>`
 
 **Minh chứng:**
-<img width="843" height="379" alt="image" src="https://github.com/user-attachments/assets/65b438fd-756a-48b0-b690-293f2815e870" />
+</>
 
 
 **Đề xuất xử lý:**
-`<Check the logic for comparing payment dates and deadlines, and add pop-up/warning notifications for overdue payments.>`
+`<Update the error message to match exactly what is specified in the SRS for expired members. Make sure suspended and expired accounts show different and accurate messages.>`
 
 ---
 
 
-## BUG-04
+## BUG-03
+**Tiêu đề:**
+`<System allows member to borrow more than 3 books before enforcing the borrow limit — limit check triggers too late.>`
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
-| **Mã lỗi** | BUG-04 |
-| **TC liên quan** | `<!-- TC-17 -->` |
+| **Mã lỗi** | BUG-03 |
+| **TC liên quan** | `<!-- TC-21 -->` |
 | **REQ liên quan** | `<!-- REQ-04 -->` |
 | **Mức độ** | `< High >` |
 | **Người phát hiện** | `<Nguyễn Sỹ Chúc>` |
 | **Ngày phát hiện** | `<29/5/2026>` |
 | **Trạng thái** | `< Open >` |
 
-**Tiêu đề:**
-`<Allows borrowing of books even if the member account has expired.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
 
 **Điều kiện tiên quyết:**
-`<Member's account has expired.>`
+`<Logged in as Member ba.nguyen (MEM002). Member currently has 0 active borrowed books. Data has been reset.>`
 
 **Bước tái hiện:**
-1. `<Log in using an expired member account.>`
-2. `<Access the book borrowing function.>`
-3. `<Select books and proceed with borrowing.>`
+1. `<Log in as ba.nguyen@email.com / password123.>`
+2. `<Borrow BOOK001 → success (count = 1).>`
+3. `<Borrow BOOK002 → success (count = 2).>`
+4. `<Borrow BOOK003 → success (count = 3).>`
+5. `<Attempt to borrow BOOK005 (4th book).>`
+6. `<Observe the result.>`
 
 **Kết quả mong đợi:**
-`<The system must block borrowing attempts and display an expired account message.>`
+`<The 4th borrow attempt must be rejected immediately. Error message "Đã đạt giới hạn mượn tối đa (3 sách)." is displayed. No borrow record created. BOOK005 remains "Available".>`
 
 **Kết quả thực tế:**
-`<The system displays the message "Membership has expired. Unable to borrow books," but the book remains in the "Borrowed" status.>`
+`<The system allowed the member to borrow BOOK005 as the 4th book — BOOK001, BOOK002, BOOK003, and BOOK005 all show "Đang mượn" status simultaneously. The error message "Đã đạt giới hạn mượn tối đa (3 sách)." appeared but only the 4th borrow was already processed.>`
 
 **Tác động:**
-`<Invalid book borrowing data may arise, causing discrepancies in book inventory status.>`
+`<The 3-book borrowing limit defined in REQ-04 is not properly enforced. Members can hold more than 3 books at a time, which reduces availability for other members and violates a core business rule.>`
 
 **Minh chứng:**
-<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/44a036d7-ddca-44d9-8bc7-ed0d4bcb065c" />
+</>
 
 
 **Đề xuất xử lý:**
-`<Ensure that the transaction is fully rolled back when the account expires and do not update the book's status to "Borrowed".>`
+`<The borrow limit check must happen BEFORE processing the request. If the member's current active borrow count is already ≥ 3, reject immediately and do not create any borrow record.>`
 
-## BUG-05
+## BUG-04
+**Tiêu đề:**
+`<System does not display overdue warning when returning an overdue book — BR001 returned silently without any alert.>`
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
-| **Mã lỗi** | BUG-05 |
-| **TC liên quan** | `<!-- TC-36 -->` |
-| **REQ liên quan** | `<!-- REQ-08 -->` |
-| **Mức độ** | `< High >` |
+| **Mã lỗi** | BUG-04 |
+| **TC liên quan** | `<!-- TC-23 -->` |
+| **REQ liên quan** | `<!-- REQ-05 -->` |
+| **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `<Nguyễn Sỹ Nam >` |
 | **Ngày phát hiện** | `<29/5/2026>` |
 | **Trạng thái** | `< Open >` |
 
-**Tiêu đề:**
-`<Members can view other people's loan slips.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
 
 **Điều kiện tiên quyết:**
-`<Log in using your regular member account.>`
+`<Logged in as Librarian. Click "Kiểm tra quá hạn" to flag BR001 as overdue. Then log in as ba.nguyen (MEM002). BR001 (BOOK003 — Kiểm thử phần mềm nhập môn) is overdue since 15/09/2024.`
 
 **Bước tái hiện:**
-1. `<Log in using your member account.>`
-2. `<Access the "Loan Receipt Lookup" page.>`
-3. `<Enter another member code ( MEM003)>`
-4. `<Click "Search">`
+1. `<Log in as Librarian, click "Kiểm tra quá hạn".>`
+2. `<Log out, then log in as ba.nguyen@email.com / password123.>`
+3. `<Go to "Mượn / Trả" tab.>`
+4. `<Find BR001 and click Return.>`
+5. `<Confirm the return action.>`
+6. `<Observe whether any overdue warning appears.>`
 
 **Kết quả mong đợi:**
-`<The system only allows users to view their own loan slips.>`
+`<Return is processed successfully  the system must display an overdue warning to notify the member that the book was returned late. REQ-05 explicitly states: "Nếu trả quá hạn → hệ thống phải hiển thị cảnh báo quá hạn".>`
 
 **Kết quả thực tế:**
-`<Users can view other members' loan slip information ( MEM003).>`
+`<BR001 status changed to "Đã trả" with return date 29/05/2026. The return was processed successfully but NO overdue warning was displayed at any point. The late return was silently accepted.>`
 
 **Tác động:**
-`<Leaking personal information and borrowing history of others constitutes a violation of access rights and data security.>`
+`<Members who return books late receive no notification or warning. This removes accountability for late returns and violates REQ-05 which explicitly requires an overdue warning on late returns.>`
 
 **Minh chứng:**
-<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/69528386-a5f3-4644-a7df-e2b2bd2e3dd1" />
+< />
 
 
 **Đề xuất xử lý:**
-`<Verify access permissions before querying loan slip data, only allowing access to data belonging to the current account.>`
+`<When processing a return, check if the return date is after the dueDate. If yes, display an overdue warning before or after confirming the return action.>`
 
-## BUG-06
+## BUG-05
+**Tiêu đề:**
+`<System incorrectly rejects a valid email address (test@email.com) when adding a new member.>`
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
-| **Mã lỗi** | BUG-06 |
+| **Mã lỗi** | BUG-05 |
 | **TC liên quan** | `<!-- TC-28 -->` |
 | **REQ liên quan** | `<!-- REQ-07 -->` |
-| **Mức độ** | `< Low >` |
+| **Mức độ** | `< High >` |
 | **Người phát hiện** | `<Nguyễn Phú Nam Hải >` |
 | **Ngày phát hiện** | `<31/5/2026>` |
 | **Trạng thái** | `< Open >` |
 
-**Tiêu đề:**
-`<The error message "Invalid email address displayed" is incorrect.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
 
 **Điều kiện tiên quyết:**
-`<The "Add New Member" screen is currently open.>`
+`<Logged in as Librarian. The "Thêm thành viên mới" screen is open.>`
 
 **Bước tái hiện:**
-1. `<Enter emailnguyen.test@email.com>`
-2. `<Click "Add member">`
-
+1. `<Go to "Thành viên" tab.>`
+2. `<Click "Thêm thành viên mới".>`
+3.`<Enter Full name: Nguyen Van Test.>`
+4.`<Enter Email: test@email.com.>`
+5.`<Enter Phone: 0901234567.>`
+6.`<Click "Thêm thành viên".>`
+7.`<Observe the result.>`
 
 **Kết quả mong đợi:**
-`<The system must accept a valid email address and successfully create a member.>`
+`<New member should be created successfully. The email test@email.com is a valid format — it contains "@"  has a "." in the domain part (email.com), which fully satisfies the validation rule defined in REQ-07.>`
 
 **Kết quả thực tế:**
-`<The system displays the message "Invalid email address" and fails to create an account.>`
+`<System displayed "Email không hợp lệ." and rejected the form. No member was created despite the email being in a completely valid format according to the SRS.>`
 
 **Tác động:**
-`<Users are unable to register accounts with valid email addresses, affecting member management functionality.>`
+`<Librarians cannot add new members using short but valid email domains like test@email.com, xyz@abc.vn, etc. This blocks a core feature and makes the system unusable for a range of legitimate email addresses.>`
 
 **Minh chứng:**
-<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/9110deb1-d3d6-428e-b9de-cc16d5ccc591" />
+</>
 
 
 **Đề xuất xử lý:**
-`<Check the email validation regex to ensure full support for RFC-compliant email formats.>`
+`<Fix the email validation logic to match the SRS rule exactly: accept any email that contains "@" and has at least one "." in the domain part. Do not apply stricter regex rules beyond what is specified.>`
+
+## BUG-06
+**Tiêu đề:**
+`<System accepts invalid email missing a dot in the domain part (test@email) and successfully creates a new member.>`
+
+
+| Thuộc tính | Chi tiết |
+|-----------|---------|
+| **Mã lỗi** | BUG-06 |
+| **TC liên quan** | `<!-- TC-29 -->` |
+| **REQ liên quan** | `<!-- REQ-07 -->` |
+| **Mức độ** | `< High >` |
+| **Người phát hiện** | `<Ngô Đức Minh Sơn >` |
+| **Ngày phát hiện** | `<4/6/2026>` |
+| **Trạng thái** | `< Open >` |
+
+**Điều kiện tiên quyết:**
+`<LLogged in as Librarian. The "Thêm thành viên mới" screen is open.>`
+
+**Bước tái hiện:**
+1. `<Go to "Thành viên" tab.>`
+2. `<Click "Thêm thành viên mới".>`
+3. `<Enter Full name: Nguyen Van Test.>`
+4. `<Enter Email: test@email (has @ but missing "." in domain).>`
+5. `<Enter Phone: 0901234567.>`
+6. `<Click "Thêm thành viên".>`
+7. `<Observe the result.>`
+
+**Kết quả mong đợi:**
+`<System must reject the form and display "Email không hợp lệ." error. REQ-07 explicitly states the email must have "@" AND a "." in the domain part. The email test@email has no dot after @ so it is invalid and no member should be created.>`
+
+**Kết quả thực tế:**
+`<System displayed "Thêm thành viên thành công! Mã: MEM007" and created a new member with the invalid email test@email. The fields were cleared automatically after submission, confirming the record was saved.>`
+
+**Tác động:**
+`<The email validation is incomplete — it only checks for the presence of "@" but does not verify that the domain contains a ".". Invalid email addresses get saved to the system, which can cause issues with any email-based features later and violates the validation rule defined in REQ-07.>`
+
+**Minh chứng:**
+</>
+
+**Đề xuất xử lý:**
+`<Update the email validation to check for  conditions: must contain "@" AND must have at least one "." after the "@". Reject and show error if either condition is not met.>`
 
 ## BUG-07
+**Tiêu đề:**
+`<Member can view borrow records of other members by searching their member ID — critical privacy and access control violation.>`
 
 | Thuộc tính | Chi tiết |
 |-----------|---------|
 | **Mã lỗi** | BUG-07 |
-| **TC liên quan** | `<!-- TC-21 -->` |
-| **REQ liên quan** | `<!-- REQ-04 -->` |
-| **Mức độ** | `< Medium >` |
-| **Người phát hiện** | `<Ngô Đức Minh Sơn >` |
-| **Ngày phát hiện** | `<4//2026>` |
-| **Trạng thái** | `< Open >` |
-
-**Tiêu đề:**
-`<System allows a member to borrow more than 3 books, exceeding the maximum borrowing limit.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
-
-**Điều kiện tiên quyết:**
-`<Logged in as Member (MEM002 — ba.nguyen). Member already has 3 active borrowed books.>`
-
-**Bước tái hiện:**
-1. `<Log in as Member ba.nguyen@email.com / password123.>`
-2. `<Borrow books until the member reaches exactly 3 active borrowed books.>`
-3. `<Attempt to borrow an additional available book (e.g. BOOK008).>`
-4.`<Observe system response.>`
-
-**Kết quả mong đợi:**
-`<The system must immediately reject the borrow request. Warning message "Đã đạt giới hạn mượn tối đa (3 sách)." must be displayed. No new borrow record should be created. BOOK008 remains "Available".>`
-
-**Kết quả thực tế:**
-`<The system successfully processes the 4th borrow request. A new borrow record is created and the book status changes to "Borrowed", exceeding the 3-book limit defined in the SRS.>`
-
-**Tác động:**
-`<The borrowing limit constraint is not enforced, allowing members to hold unlimited books simultaneously. This reduces availability for other members and violates core business rules defined in REQ-04.>`
-
-**Minh chứng:**
-<img width="1912" height="907" alt="image" src="https://github.com/user-attachments/assets/4976fcb9-ad31-44c1-a3c4-0811017fd2b1" />
-
-**Đề xuất xử lý:**
-`<Before processing a borrow request, check the member's current active borrow count. If count ≥ 3, reject the request and display the appropriate error message as specified in REQ-04.>`
-
-## BUG-09
-
-| Thuộc tính | Chi tiết |
-|-----------|---------|
-| **Mã lỗi** | BUG-09 |
-| **TC liên quan** | `<!-- TC-14 -->` |
-| **REQ liên quan** | `<!-- REQ-03 -->` |
+| **TC liên quan** | `<!-- TC-36 -->` |
+| **REQ liên quan** | `<!-- REQ-08 -->` |
 | **Mức độ** | `< Medium >` |
 | **Người phát hiện** | `< Đinh Công Thành >` |
-| **Ngày phát hiện** | `<4//2026>` |
+| **Ngày phát hiện** | `<4/6/2026>` |
 | **Trạng thái** | `< Open >` |
 
-**Tiêu đề:**
-`<Search and category filter do not apply intersection — all results from either condition are shown separately.>`
-
-**Môi trường:**
-- Trình duyệt: Chrome `< 148.0.7778.179 >`
-- Hệ điều hành: `<Windows 10>`
-- Ngôn ngữ giao diện: Tiếng Việt
-
 **Điều kiện tiên quyết:**
-`<User is logged in. The "Books" tab is open.>`
+`<Logged in as Member ba.nguyen (MEM002 — Nguyễn Học Bá). On the "Mượn / Trả" tab.>`
 
 **Bước tái hiện:**
-1. `<Go to the "Books" tab.>`
-2. `<Select category filter: Technology (Công nghệ).>`
-3. `<Type keyword Python in the search box.>`
-4.`<Observe the results displayed.>`
+1. `<Log in as ba.nguyen@email.com / password123.>`
+2. `<Go to "Mượn / Trả" tab.>`
+3. `<Click on "Tra cứu phiếu mượn".>`
+4. `<Type MEM003 in the search box.>`
+5. `<Click "Tra cứu".>`
+6. `<Observe the results.>`
 
 **Kết quả mong đợi:**
-`<Only BOOK009 (Nhập môn lập trình Python — Technology) should be displayed, as it is the only book satisfying BOTH the category filter AND the search keyword simultaneously.>`
+`<No results should be displayed. REQ-08 explicitly states: "Thành viên chỉ xem phiếu mượn của chính mình. Không được xem phiếu mượn của thành viên khác." A member must never be able to access another member's borrow records regardless of search input.>`
 
 **Kết quả thực tế:**
-`<Describe the actual results observed. — : all Technology books are shown, or all books matching "Python" regardless of category are shown. >`
+`<The system returned BR002 and BR005 — both belonging to MEM003 (Trần Dựa Dẫm). Member ba.nguyen was able to see the full borrow history of another member including book titles, borrow dates, due dates, and return dates. >`
 
 **Tác động:**
-`<Search and filter work independently instead of as a combined condition, causing users to receive irrelevant results and making it difficult to locate a specific book efficiently.>`
+`<This is a critical security and privacy breach. Any member can look up the borrow history of any other member just by knowing or guessing their member ID. This violates data privacy rules and completely breaks the access control requirement defined in REQ-08.>`
 
 **Minh chứng:**
-<img width="1906" height="883" alt="image" src="https://github.com/user-attachments/assets/77bd9c6a-0437-400a-ac18-2975d0557222" />
+< />
 
 
 **Đề xuất xử lý:**
-`<Apply both conditions simultaneously using AND logic: results must match the selected category AND contain the keyword in title or author name.)>` 
+`<The "Tra cứu phiếu mượn" search feature must be restricted to Librarian role only. For Member role, this tab should either be hidden entirely or only return results belonging to the currently logged-in member, ignoring any member ID input.>` 
