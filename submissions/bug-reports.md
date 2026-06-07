@@ -48,9 +48,8 @@
 `<Users who type the category name in lowercase will get no results, making the filter basically unusable unless they know to type with exact capitalization.>`
 
 **Minh chứng:**
-< />
-
-
+<<img width="1366" height="719" alt="image" src="https://github.com/user-attachments/assets/c8678252-9a5b-49f1-923f-fb4ed6550a24" />
+ 
 **Đề xuất xử lý:**
 `<Apply case-insensitive matching for the category filter, same as the search box. Convert both the input and category names to lowercase before comparing.)>` 
 
@@ -91,8 +90,7 @@
 `<The error message does not match the exact wording defined in REQ-04. While the borrow is correctly rejected, the inconsistent message could cause confusion and fails the acceptance criteria for exact error message matching.>`
 
 **Minh chứng:**
-</>
-
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/5e60396e-51bb-4733-a63a-11c4caa16246" >
 
 **Đề xuất xử lý:**
 `<Update the error message to match exactly what is specified in the SRS for expired members. Make sure suspended and expired accounts show different and accurate messages.>`
@@ -136,8 +134,7 @@
 `<The 3-book borrowing limit defined in REQ-04 is not properly enforced. Members can hold more than 3 books at a time, which reduces availability for other members and violates a core business rule.>`
 
 **Minh chứng:**
-</>
-
+<img width="1568" height="744" alt="image" src="https://github.com/user-attachments/assets/b3b72423-53fc-418f-bbfd-5bbf7c043eb4" />
 
 **Đề xuất xử lý:**
 `<The borrow limit check must happen BEFORE processing the request. If the member's current active borrow count is already ≥ 3, reject immediately and do not create any borrow record.>`
@@ -178,8 +175,7 @@
 `<Members who return books late receive no notification or warning. This removes accountability for late returns and violates REQ-05 which explicitly requires an overdue warning on late returns.>`
 
 **Minh chứng:**
-< />
-
+<img width="843" height="379" alt="image" src="https://github.com/user-attachments/assets/0dc02088-7593-445d-9281-f8517d53f56a" />
 
 **Đề xuất xử lý:**
 `<When processing a return, check if the return date is after the dueDate. If yes, display an overdue warning before or after confirming the return action.>`
@@ -221,8 +217,7 @@
 `<Librarians cannot add new members using short but valid email domains like test@email.com, xyz@abc.vn, etc. This blocks a core feature and makes the system unusable for a range of legitimate email addresses.>`
 
 **Minh chứng:**
-</>
-
+<img width="1568" height="746" alt="image" src="https://github.com/user-attachments/assets/b6687812-6504-4d1d-aafc-52b6553f8da5" />
 
 **Đề xuất xử lý:**
 `<Fix the email validation logic to match the SRS rule exactly: accept any email that contains "@" and has at least one "." in the domain part. Do not apply stricter regex rules beyond what is specified.>`
@@ -264,7 +259,7 @@
 `<The email validation is incomplete — it only checks for the presence of "@" but does not verify that the domain contains a ".". Invalid email addresses get saved to the system, which can cause issues with any email-based features later and violates the validation rule defined in REQ-07.>`
 
 **Minh chứng:**
-</>
+<img width="1456" height="819" alt="image" src="https://github.com/user-attachments/assets/66088437-b748-4c0b-b524-4e2d3106e021" />
 
 **Đề xuất xử lý:**
 `<Update the email validation to check for  conditions: must contain "@" AND must have at least one "." after the "@". Reject and show error if either condition is not met.>`
@@ -304,8 +299,7 @@
 `<This is a critical security and privacy breach. Any member can look up the borrow history of any other member just by knowing or guessing their member ID. This violates data privacy rules and completely breaks the access control requirement defined in REQ-08.>`
 
 **Minh chứng:**
-< />
-
+<img width="640" height="360" alt="image" src="https://github.com/user-attachments/assets/315f2e79-5d1b-4baf-b1a3-e163bdc7405e" />
 
 **Đề xuất xử lý:**
 `<The "Tra cứu phiếu mượn" search feature must be restricted to Librarian role only. For Member role, this tab should either be hidden entirely or only return results belonging to the currently logged-in member, ignoring any member ID input.>` 
