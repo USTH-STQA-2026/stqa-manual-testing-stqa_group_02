@@ -25,7 +25,7 @@
 | Blocked | 2 |
 | Not Run | 0 |
 | **Tỷ lệ Pass** | **75.7%** |
-| **Số bug phát hiện** | **7** (BUG-01, BUG-03, BUG-04, BUG-05, BUG-06, BUG-07, BUG-09) |
+| **Số bug phát hiện** | **7** (BUG-01, BUG-02, BUG-03, BUG-04, BUG-05, BUG-06, BUG-07) |
 
 ### Phân bổ theo nhóm chức năng
 
@@ -33,12 +33,12 @@
 |----------------|----|------|------|-----|----------|
 | Login | 5 | 5 | 0 | 0 | Good — all test cases passed, role authentication and error messages worked correctly |
 | Book List | 3 | 3 | 0 | 0 | Good — all 20 books displayed correctly and statuses were updated in real time |
-| Search & Filter | 6 | 5 | 1 | 1 | Moderate — logical AND condition failed when combining search and category filters (BUG-09) |
-| Borrow Book | 7 | 4 | 2 | 2 |  Poor — borrowing limit validation and transaction rollback defects identified (BUG-04, BUG-07) |
-| Return Book | 2 | 1 | 1 | 1 |  Moderate — overdue return warning was not displayed (BUG-03) |
+| Search & Filter | 6 | 5 | 1 | 1 | Moderate — category filter is case-sensitive and does not handle lowercase input correctly (BUG-01) |
+| Borrow Book | 7 | 4 | 2 | 2 |  Poor — borrowing limit validation and account status handling issues (BUG-02, BUG-03) |
+| Return Book | 2 | 1 | 1 | 1 |  Moderate — overdue return warning is not displayed (BUG-04) |
 | Check Overdue | 4 | 3 | 0 | 0 |  Good — permission control and overdue flagging worked correctly (1 test case was Blocked due to unavailable test data) |
-| Member Management | 5 | 3 | 2 | 2 |  Moderate — email validation was both overly permissive and overly restrictive (BUG-01, BUG-06) |
-| Access Control | 5 | 4 | 1 | 1 |  Poor — critical security vulnerability allowed members to view other users' borrowing records (BUG-05) |
+| Member Management | 5 | 3 | 2 | 2 |  Moderate —email validation rejects valid emails and accepts invalid ones (BUG-05, BUG-06)  |
+| Access Control | 5 | 4 | 1 | 1 |  Poor — unauthorized access to another member's records (BUG-07) |
 
 > **Lưu ý:** TC-16 (Borrow Book) và TC-25 (Check Overdue) được đánh dấu là **Blocked**, do đó không được tính vào Pass hoặc Fail.
 
@@ -46,9 +46,9 @@
 
 | Mức độ | Số lượng | Bug IDs |
 |---------|---------|---------|
-| High | 2 | BUG-04, BUG-05 |
-| Medium | 4 | BUG-01, BUG-03, BUG-07, BUG-09 |
-| Low | 1 | BUG-06 |
+| High | 2 | BUG-02, BUG-07 |
+| Medium | 4 | BUG-01, BUG-03, BUG-04, BUG-06 |
+| Low | 1 | BUG-05 |
 
 ---
 
@@ -80,13 +80,13 @@
 ### 4.2. Điểm yếu
 `<!-- Liệt kê các vấn đề nghiêm trọng -->`
 
-- **BUG-05 (High – REQ-08):** A member was able to view borrowing records that belonged to another member. This is a serious security issue because personal borrowing information should only be visible to the owner and librarians.
-- **BUG-04 (High – REQ-04):** The borrowing process was not handled consistently. The system displayed a rejection message, but some data updates were still performed, which may lead to incorrect records.
-- **BUG-07 (Medium – REQ-04):** The borrowing limit was not checked at the correct time. A member could still borrow a fourth book even though the maximum limit should be three books.
-- **BUG-03 (Medium – REQ-05):** The system did not display any warning when an overdue book was returned. This may cause librarians to miss overdue cases.
-- **BUG-09 (Medium – REQ-03):** Search and category filters did not always work together correctly. In some situations, the system ignored the search keyword and only applied the category filter.
-- **BUG-01 (Medium – REQ-07):** Invalid email formats such as `test@email` were accepted and stored in the system.
-- **BUG-06 (Low – REQ-07):** Some valid email addresses were rejected because the validation rules were too strict.
+- **BUG-07 (High — REQ-08):** A member was able to access borrowing records belonging to another member. This is a serious access-control vulnerability and exposes personal data.
+- **BUG-02 (High — REQ-04):** The system displayed a rejection message for a suspended account but did not fully enforce the borrowing restriction as expected. This indicates an issue in business-rule validation.
+- **BUG-03 (Medium — REQ-04):** The borrowing limit of three active books was enforced too late. The member was able to borrow a fourth book successfully and only received the warning message when attempting to borrow a fifth book.
+- **BUG-04 (Medium — REQ-05):** Returning an overdue book did not trigger the expected overdue warning message.
+- **BUG-01 (Medium — REQ-03):** Category filtering was case-sensitive. Entering `Công nghệ` returned results correctly, while entering `công nghệ` returned no books.
+- **BUG-06 (Medium — REQ-07):** The system accepted an invalid email format such as `test@email`, allowing invalid member data to be stored.
+- **BUG-05 (Low — REQ-07):** The system incorrectly rejected a valid email address (`test@email.com`) even though it matched the required format defined in the SRS.
 
 ---
 
@@ -95,25 +95,20 @@
 
 | Thứ tự | Bug | Mức độ | Lý do ưu tiên |
 |---------|---------|---------|---------|
-| 1 | **BUG-05** | High | Members can access borrowing records that do not belong to them. This affects user privacy and should be fixed before the system is released. |
-| 2 | **BUG-04** | High | Incorrect updates during the borrowing process may create inconsistent data between books and borrowing records. |
-| 3 | **BUG-07** | Medium | The borrowing limit defined in the requirements is not enforced correctly, which may allow members to borrow more books than allowed. |
-| 4 | **BUG-03** | Medium | Missing overdue warnings may affect the librarian's ability to manage overdue books properly. |
-| 5 | **BUG-09** | Medium | Search results may become confusing because search and filter conditions are not combined correctly. |
-| 6 | **BUG-01** | Medium | Invalid email addresses can be stored in the system and may cause issues in future communication features. |
-| 7 | **BUG-06** | Low | Valid users may not be added successfully because some valid email formats are rejected. |
+| 1 | **BUG-07** | High | Unauthorized access to another member's borrowing records exposes private information and violates access-control requirements. |
+| 2 | **BUG-02** | High | Borrowing restrictions for suspended members are not enforced correctly, affecting core business rules. |
+| 3 | **BUG-03** | Medium | Borrowing limit validation is delayed and allows members to exceed the maximum number of active loans. |
+| 4 | **BUG-04** | Medium | Missing overdue warning may affect the return process and user awareness. |
+| 5 | **BUG-01** | Medium | Category filtering behaves inconsistently depending on letter case, reducing search usability. |
+| 6 | **BUG-06** | Medium | Invalid email formats are accepted and may lead to poor data quality. |
+| 7 | **BUG-05** | Low | Valid email addresses are rejected, causing inconvenience when adding new members. |
 
 ---
 
 ## 6. Kết luận
 `<!-- Đánh giá tổng thể: Hệ thống có sẵn sàng phát hành không? Tại sao? -->`
-The system is not ready for release at this stage.
-
-Although 28 out of 37 test cases passed (75.7%), several important issues were found during testing. Two High severity bugs are still open, including a security issue that allows members to view other users' records and a data consistency problem in the borrowing process.
-
-Several Medium severity bugs were also found in important functions such as borrowing limits, overdue handling, search and filter behaviour, and email validation.
-
-The High severity bugs should be fixed first because they have the greatest impact on users and system reliability. After that, the remaining Medium severity bugs should be addressed. Regression testing should be carried out after each fix to make sure no new issues are introduced.
+-With a pass rate of 75.7% (28/37 test cases), the system performs well in core workflows such as login, book listing, and basic search. However, two High-severity defects remain unresolved: BUG-07, which allows unauthorized access to another member's borrowing records, and BUG-02, which affects enforcement of borrowing restrictions. In addition, several Medium-severity issues impact borrowing limits, overdue notifications, category filtering, and email validation.
+-The system should not be released until the High-severity defects are fixed and regression testing has been completed.
 
 ---
 
