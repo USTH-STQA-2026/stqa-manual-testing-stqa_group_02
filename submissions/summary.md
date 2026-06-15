@@ -80,13 +80,13 @@
 ### 4.2. Điểm yếu
 `<!-- Liệt kê các vấn đề nghiêm trọng -->`
 
--**BUG-03** (High — REQ-04): The system allows a member to borrow a fourth book before enforcing the maximum borrowing limit. The validation check is performed too late, resulting in a violation of a core business rule.
--**BUG-05** (High — REQ-07): The system incorrectly rejects valid email addresses that satisfy the format defined in the SRS. This prevents librarians from creating legitimate member accounts.
--**BUG-06** (High — REQ-07): The system accepts invalid email formats such as test@email, allowing incorrect member data to be stored in the system and reducing data quality.
--**BUG-01** (Medium — REQ-03): Category filtering is case-sensitive. Users receive different results depending on capitalization, reducing search usability and consistency.
--**BUG-02** (Medium — REQ-04): The system displays an error message that does not exactly match the wording required by the SRS for expired members. Although the borrow request is rejected correctly, the acceptance criteria regarding exact message content are not satisfied.
--**BUG-04** (Medium — REQ-05): Returning an overdue book does not trigger the required overdue warning message, reducing user awareness of late returns.
--**BUG-07** (Medium — REQ-08): A member can view borrowing records belonging to another member. This violates the access-control requirement and exposes information that should not be visible to unauthorized users.
+- **BUG-03** (High — REQ-04): The system allows a member to borrow a fourth book before enforcing the maximum borrowing limit. The validation check is performed too late, resulting in a violation of a core business rule.
+- **BUG-05** (High — REQ-07): The system incorrectly rejects valid email addresses that satisfy the format defined in the SRS. This prevents librarians from creating legitimate member accounts.
+- **BUG-06** (High — REQ-07): The system accepts invalid email formats such as test@email, allowing incorrect member data to be stored in the system and reducing data quality.
+- **BUG-01** (Medium — REQ-03): Category filtering is case-sensitive. Users receive different results depending on capitalization, reducing search usability and consistency.
+- **BUG-02** (Medium — REQ-04): The system displays an error message that does not exactly match the wording required by the SRS for expired members. Although the borrow request is rejected correctly, the acceptance criteria regarding exact message content are not satisfied.
+- **BUG-04** (Medium — REQ-05): Returning an overdue book does not trigger the required overdue warning message, reducing user awareness of late returns.
+- **BUG-07** (Medium — REQ-08): A member can view borrowing records belonging to another member. This violates the access-control requirement and exposes information that should not be visible to unauthorized users.
 
 ---
 
