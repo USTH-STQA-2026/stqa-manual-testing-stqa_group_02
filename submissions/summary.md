@@ -46,9 +46,9 @@
 
 | Mức độ | Số lượng | Bug IDs |
 |---------|---------|---------|
-| High | 2 | BUG-02, BUG-07 |
-| Medium | 4 | BUG-01, BUG-03, BUG-04, BUG-06 |
-| Low | 1 | BUG-05 |
+| High | 3 | BUG-03, BUG-05, BUG-06 |
+| Medium | 4 | BUG-01, BUG-02, BUG-04, BUG-07 |
+| Low | 0 |  |
 
 ---
 
@@ -80,13 +80,13 @@
 ### 4.2. Điểm yếu
 `<!-- Liệt kê các vấn đề nghiêm trọng -->`
 
-- **BUG-07 (High — REQ-08):** A member was able to access borrowing records belonging to another member. This is a serious access-control vulnerability and exposes personal data.
-- **BUG-02 (High — REQ-04):** The system displayed a rejection message for a suspended account but did not fully enforce the borrowing restriction as expected. This indicates an issue in business-rule validation.
-- **BUG-03 (Medium — REQ-04):** The borrowing limit of three active books was enforced too late. The member was able to borrow a fourth book successfully and only received the warning message when attempting to borrow a fifth book.
-- **BUG-04 (Medium — REQ-05):** Returning an overdue book did not trigger the expected overdue warning message.
-- **BUG-01 (Medium — REQ-03):** Category filtering was case-sensitive. Entering `Công nghệ` returned results correctly, while entering `công nghệ` returned no books.
-- **BUG-06 (Medium — REQ-07):** The system accepted an invalid email format such as `test@email`, allowing invalid member data to be stored.
-- **BUG-05 (Low — REQ-07):** The system incorrectly rejected a valid email address (`test@email.com`) even though it matched the required format defined in the SRS.
+-**BUG-03** (High — REQ-04): The system allows a member to borrow a fourth book before enforcing the maximum borrowing limit. The validation check is performed too late, resulting in a violation of a core business rule.
+-**BUG-05** (High — REQ-07): The system incorrectly rejects valid email addresses that satisfy the format defined in the SRS. This prevents librarians from creating legitimate member accounts.
+-**BUG-06** (High — REQ-07): The system accepts invalid email formats such as test@email, allowing incorrect member data to be stored in the system and reducing data quality.
+-**BUG-01** (Medium — REQ-03): Category filtering is case-sensitive. Users receive different results depending on capitalization, reducing search usability and consistency.
+-**BUG-02** (Medium — REQ-04): The system displays an error message that does not exactly match the wording required by the SRS for expired members. Although the borrow request is rejected correctly, the acceptance criteria regarding exact message content are not satisfied.
+-**BUG-04** (Medium — REQ-05): Returning an overdue book does not trigger the required overdue warning message, reducing user awareness of late returns.
+-**BUG-07** (Medium — REQ-08): A member can view borrowing records belonging to another member. This violates the access-control requirement and exposes information that should not be visible to unauthorized users.
 
 ---
 
@@ -95,21 +95,21 @@
 
 | Thứ tự | Bug | Mức độ | Lý do ưu tiên |
 |---------|---------|---------|---------|
-| 1 | **BUG-07** | High | Unauthorized access to another member's borrowing records exposes private information and violates access-control requirements. |
-| 2 | **BUG-02** | High | Borrowing restrictions for suspended members are not enforced correctly, affecting core business rules. |
-| 3 | **BUG-03** | Medium | Borrowing limit validation is delayed and allows members to exceed the maximum number of active loans. |
-| 4 | **BUG-04** | Medium | Missing overdue warning may affect the return process and user awareness. |
-| 5 | **BUG-01** | Medium | Category filtering behaves inconsistently depending on letter case, reducing search usability. |
-| 6 | **BUG-06** | Medium | Invalid email formats are accepted and may lead to poor data quality. |
-| 7 | **BUG-05** | Low | Valid email addresses are rejected, causing inconvenience when adding new members. |
+| 1 | **BUG-03** | High | Members can exceed the maximum borrowing limit, violating a core business rule of the library system. |
+| 2 | **BUG-05** | High |Valid email addresses are rejected, preventing librarians from creating legitimate member accounts. |
+| 3 | **BUG-06** | Medium | Invalid email addresses are accepted, leading to poor data quality and future maintenance issues. |
+| 4 | **BUG-01** | Medium | Category filtering behaves inconsistently depending on capitalization, reducing usability. |
+| 5 | **BUG-02** | Medium | Error messages do not fully comply with the wording specified in the SRS. |
+| 6 | **BUG-04** | Medium | Missing overdue warnings reduce user awareness when returning overdue books. |
+| 7 | **BUG-07** | Medium | Unauthorized access to borrowing records should be fixed, but the issue currently affects visibility rather than core transaction processing. |
 
 ---
 
 ## 6. Kết luận
 `<!-- Đánh giá tổng thể: Hệ thống có sẵn sàng phát hành không? Tại sao? -->`
--With a pass rate of 75.7% (28/37 test cases), the system performs well in core workflows such as login, book listing, and basic search. However, two High-severity defects remain unresolved: BUG-07, which allows unauthorized access to another member's borrowing records, and BUG-02, which affects enforcement of borrowing restrictions. In addition, several Medium-severity issues impact borrowing limits, overdue notifications, category filtering, and email validation.
--The system should not be released until the High-severity defects are fixed and regression testing has been completed.
-
+- With a pass rate of 75.7% (28/37 test cases), the system performs well in core workflows such as login, book listing, and basic search. However, three High-severity defects remain unresolved: BUG-03 (borrow limit enforcement), BUG-05 (valid email rejection), and BUG-06 (invalid email acceptance). These defects affect important business rules and data validation.
+- In addition, several Medium-severity issues remain in category filtering, error-message compliance, overdue notifications, and access control. Although many core functions operate correctly, the system still requires bug fixes and regression testing before being considered ready for release.
+- The system should not be released until the High-severity defects are resolved and regression testing has been completed successfully.
 ---
 
 ## 7. Bài học rút ra (Tùy chọn)
